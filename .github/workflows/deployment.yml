@@ -1,1 +1,20 @@
 name: Render deployment
+
+on:
+  workflow_dispatch:
+    inputs:
+        environment:
+            description: "Select environment"
+            required: true
+            type: environment
+
+jobs:
+  Render-Deployment:
+    runs-on: ubuntu-latest
+    environment: ${{ inputs.environment }}
+    steps:
+      - name: Render Deployment
+        env:
+          DEPLOYMENT_URL: ${{ secrets.REPO_HOOK }}
+        run: |
+          curl "$DEPLOYMENT_URL"
